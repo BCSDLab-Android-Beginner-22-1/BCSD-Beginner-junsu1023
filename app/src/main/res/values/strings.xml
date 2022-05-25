@@ -1,3 +1,16 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">BCSD Assign4</string>
+    <string name="count">Count</string>
+    <string name="toast">Toast</string>
+    <string name="random">Random</string>
+    <string name="between_num">Here is a random number between 0 and %d</string>
+    <string name="three_to_one">셋 중에 하나만 골라 yes yes yes</string>
+    <string name="select_button">select button</string>
+    <string name="reset">Reset</string>
+    <string name="surprise">Surprise</string>
+    <string name="End">end</string>
+    <string name="Channel_name">Channel_name</string>
+    <string name="Channel_description">Channel_description</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
