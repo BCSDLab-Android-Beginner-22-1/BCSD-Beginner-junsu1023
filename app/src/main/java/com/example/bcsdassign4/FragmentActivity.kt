@@ -1,8 +1,6 @@
 package com.example.bcsdassign4
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent.getIntent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater

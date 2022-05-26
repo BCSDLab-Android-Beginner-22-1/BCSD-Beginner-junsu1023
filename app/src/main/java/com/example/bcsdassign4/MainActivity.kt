@@ -1,6 +1,7 @@
 package com.example.bcsdassign4
 
 import android.app.*
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -16,15 +17,14 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import org.w3c.dom.Text
 
-const val notificationId = 1002
-class MainActivity : AppCompatActivity() {
-    private val channelId = "my_channel"
+const val NOTIFICATION_ID = 1004
+const val CHANNEL_ID = "my_channel"
+private var count = 0
 
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var count = 1
 
         val dialogButton: Button = findViewById(R.id.dialog_button)
         val countButton: Button = findViewById(R.id.count_button)
@@ -48,22 +48,23 @@ class MainActivity : AppCompatActivity() {
             builder.show()
         })
 
-        countButton.setOnClickListener(View.OnClickListener {
+        countButton.setOnClickListener {
             count++
             numberText.text = "$count"
-        })
+        }
 
+        createNotificationChannel()
         randomButton.setOnClickListener {
-            displayNotification(count, channelId)
+            displayNotification(CHANNEL_ID)
         }
     }
 
-    private fun createNotificationChannel(channelId: String) {
+    private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = getString(R.string.Channel_name)
             val descriptionText = getString(R.string.Channel_description)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(channelId, name, importance).apply {
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }
             val notificationManager: NotificationManager =
@@ -72,14 +73,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun displayNotification(count: Int, channelId: String) {
+    private fun displayNotification(channelId: String) {
         val intent = Intent(this, ChangeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            putExtra("count", count)
         }
-        intent.putExtra("count", count)
 
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        val builder = NotificationCompat.Builder(this, channelId)
+        val pendingIntent: PendingIntent =
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+            }
+        else {
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            }
+
+        var builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.notification_icon)
             .setContentTitle(getString(R.string.Channel_name))
             .setContentText(getString(R.string.Channel_description))
@@ -88,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)) {
-            notify(notificationId, builder.build())
+            notify(NOTIFICATION_ID, builder.build())
         }
     }
 }
