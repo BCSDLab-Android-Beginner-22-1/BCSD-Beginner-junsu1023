@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="writer">작성자</string>
+    <string name="post_title">제목</string>
+    <string name="post_contents">내용을 입력하세요.</string>
+    <string name="complete">완료</string>
+    <string name="time">작성시간</string>
+    <string name="no_name">"익명</string>
 </resources>
