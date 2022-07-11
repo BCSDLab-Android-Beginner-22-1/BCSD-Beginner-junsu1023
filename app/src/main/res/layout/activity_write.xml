@@ -6,6 +6,10 @@
         <variable
             name="post"
             type="com.example.myapplication.PostData" />
+
+        <variable
+            name="write_activity"
+            type="com.example.myapplication.WritePost" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,33 +49,35 @@
         <EditText
             android:id="@+id/content_text_view"
             android:layout_width="match_parent"
-            android:layout_height="550dp"
-            android:text="@{post.content}"
-            android:hint="@string/post_contents"
-            android:background="@null"
+            android:layout_height="0dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:paddingTop="20dp"
+            android:background="@null"
             android:gravity="top"
-            app:layout_constraintTop_toBottomOf="@id/title_text_view"
-            app:layout_constraintStart_toStartOf="parent"
+            android:hint="@string/post_contents"
+            android:paddingTop="20dp"
+            android:text="@{post.content}"
+            app:layout_constraintBottom_toTopOf="@+id/post_complete_button"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="155dp" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_text_view"
+            app:layout_constraintVertical_bias="0.499" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/post_complete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
             android:background="@color/hot_pink"
             android:text="@string/complete"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:onClick="@{()->write_activity.addPost() }"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.904"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/content_text_view"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
