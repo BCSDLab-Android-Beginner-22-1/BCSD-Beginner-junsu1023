@@ -3,25 +3,16 @@ package com.example.myapplication
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.ViewModelSingleTon.viewModel
 import com.example.myapplication.databinding.PostItemBinding
 
 class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
-    var postData = mutableListOf<PostData>()
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-    = ViewHolder(PostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(postData[position], position)
-    }
-
-    override fun getItemCount(): Int = postData.size
+    var dataSet = mutableListOf<PostData>()
 
     class ViewHolder(private val binding: PostItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(postData: PostData, position: Int) {
-            binding.post = postData
+        fun bind(info: PostData, position: Int) {
+            binding.post = info
 
             binding.postInfoView.setOnClickListener {
                 val intent = Intent(binding.root.context, WritePost::class.java)
@@ -30,9 +21,20 @@ class PostAdapter: RecyclerView.Adapter<PostAdapter.ViewHolder>() {
             }
 
             binding.postInfoView.setOnLongClickListener {
-                ViewModel().removePost(position)
+                viewModel.removePost(position)
                 true
             }
         }
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.post_item, parent, false)
+        return ViewHolder(PostItemBinding.bind(view))
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(dataSet[position], position)
+    }
+
+    override fun getItemCount(): Int = dataSet.size
 }
