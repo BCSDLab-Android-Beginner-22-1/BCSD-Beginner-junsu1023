@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_films"
+        android:icon="@drawable/ic_movie"
+        android:title="@string/films" />
+
+    <item
+        android:id="@+id/navigation_planets"
+        android:icon="@drawable/ic_planets"
+        android:title="@string/planets"/>
+
+    <item
+        android:id="@+id/navigation_peoples"
+        android:icon="@drawable/ic_peoples"
+        android:title="@string/peoples"/>
+</menu>
